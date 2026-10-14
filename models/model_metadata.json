@@ -1,0 +1,105 @@
+{
+  "trained_at": "2026-10-13 12:37:14",
+  "feature_columns": [
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "daily_return",
+    "intraday_return",
+    "daily_range",
+    "lag_return_1",
+    "return_5d"
+  ],
+  "target_column": "target_return",
+  "train_ratio": 0.8,
+  "train_rows": 5854,
+  "test_rows": 1464,
+  "train_start_date": "1996-01-08",
+  "train_end_date": "2019-03-27",
+  "test_start_date": "2019-03-28",
+  "test_end_date": "2025-02-27",
+  "cv_splits": 5,
+  "ridge": {
+    "best_alpha": 10.0,
+    "alpha_search_grid": [
+      0.001,
+      0.01,
+      0.1,
+      1.0,
+      10.0,
+      50.0,
+      100.0,
+      500.0,
+      1000.0
+    ],
+    "cv_best_neg_mse": -0.0029277414010446174,
+    "intercept": 0.0015494692289736117,
+    "coefficients": {
+      "open": -0.0006712284326378951,
+      "high": 0.0010749135830197974,
+      "low": 0.0011290775469767493,
+      "close": -0.001162753615902921,
+      "volume": 0.0016317399129453837,
+      "daily_return": -0.009797516250445271,
+      "intraday_return": 0.005183494214551715,
+      "daily_range": -0.0007987050301855615,
+      "lag_return_1": -0.0014258876924562946,
+      "return_5d": -0.0005842995481294173
+    },
+    "model_path": "models/ridge_model.joblib"
+  },
+  "lasso": {
+    "best_alpha": 0.0005,
+    "alpha_search_grid": [
+      1e-06,
+      5e-06,
+      1e-05,
+      5e-05,
+      0.0001,
+      0.0005,
+      0.001,
+      0.005,
+      0.01,
+      0.1
+    ],
+    "cv_best_neg_mse": -0.002921625982556014,
+    "intercept": 0.0015494692289736117,
+    "coefficients": {
+      "open": -0.0,
+      "high": -0.0,
+      "low": -0.0,
+      "close": -0.0,
+      "volume": 0.0011329627923259433,
+      "daily_return": -0.008946849772176725,
+      "intraday_return": 0.004412652635014262,
+      "daily_range": -0.00015973859773058536,
+      "lag_return_1": -0.0007840050317861943,
+      "return_5d": -0.0005195568849105294
+    },
+    "non_zero_features": 6,
+    "zeroed_features": 4,
+    "model_path": "models/lasso_model.joblib"
+  },
+  "evaluation": {
+    "ridge": {
+      "Model": "Ridge Regression",
+      "MAE": 0.012671064964719361,
+      "MSE": 0.0003457867386966456,
+      "RMSE": 0.018595341854793786,
+      "R2_Score": -0.0245132547405722,
+      "Directional_Accuracy_Pct": 49.18032786885246
+    },
+    "lasso": {
+      "Model": "Lasso Regression",
+      "MAE": 0.012515761689257639,
+      "MSE": 0.0003400015218769227,
+      "RMSE": 0.01843913018222179,
+      "R2_Score": -0.007372541549272027,
+      "Directional_Accuracy_Pct": 49.65846994535519
+    },
+    "best_model": "Lasso Regression",
+    "explanation": "On the unseen chronological test dataset (1,464 trading days), Lasso Regression achieved a slightly lower Root Mean Squared Error (Ridge RMSE: 0.018595 vs. Lasso RMSE: 0.018439) and R\u00b2 Score (Ridge R\u00b2: -0.024513 vs. Lasso R\u00b2: -0.007373). Notice that R\u00b2 is close to zero (or slightly negative) for both models. In empirical finance, daily stock returns are dominated by unpredictable news and market noise (consistent with the Efficient Market Hypothesis), so regularized models intentionally shrink coefficients toward zero to avoid overfitting. Historical price patterns alone cannot guarantee reliable future stock predictions."
+  }
+}
